@@ -7,8 +7,7 @@ import (
 	"time"
 )
 
-// Config is a struct for specifying configuration parameters for the Logger
-// middleware.
+// Config ...
 type Config struct {
 	Prefix               string
 	DisableAutoBrackets  bool
@@ -87,8 +86,7 @@ func logHTTP(h http.Handler) http.Handler {
 	return log
 }
 
-// 2014/12/30 20:41:41 [::1]:62629 GET /api/hello 200 13b 437.126µs HTTP/1.1 curl/7.37.1
-// 2014/12/30 20:47:04 [::1]:62930 POST /login 200 490b 224.032597ms HTTP/1.1 curl/7.37.1
+// [2015/01/22 23:30:48] [127.0.0.1:53773] 200 GET / 2.490822ms 4921B HTTP/1.1 curl/7.35.0
 func (log *Logger) response() {
 	for {
 		res := <-log.ch
@@ -102,14 +100,14 @@ func (log *Logger) response() {
 			res.start.Second(),
 		)
 		logRecord := fmt.Sprintf(
-			"%s %s %s %s %d %dB %v %s %s\n",
+			"[%s] [%s] %d %s %s %v %dB %s %s\n",
 			timeStamp,
 			res.ip,
+			res.responseStatus,
 			res.method,
 			res.rawpath,
-			res.responseStatus,
-			res.responseBytes,
 			time.Since(res.start),
+			res.responseBytes,
 			res.proto,
 			res.userAgent,
 		)

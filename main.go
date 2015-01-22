@@ -16,9 +16,9 @@ import (
 )
 
 var (
-	socket = flag.String("sock", "/Users/dbongo/.boot2docker/boot2docker-vm.sock", "boot2docker socket")
+	socket = flag.String("sock", "/var/run/docker.sock", "docker socket")
 	port   = flag.String("port", ":8080", "Address port to serve assets")
-	assets = flag.String("dir", "", "Path to static assets root dir")
+	assets = flag.String("dir", "./", "Path to static assets root dir")
 )
 
 // UnixHandler ...
